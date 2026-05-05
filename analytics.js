@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const analyticsService = require('../services/analytics');
-const authMiddleware = require('../middleware/auth');
+const eventLogger = require('./eventLogger');
+const authMiddleware = require('./auth');
 
 /**
  * POST /api/analytics
@@ -27,7 +27,7 @@ router.post('/analytics', authMiddleware, async (req, res) => {
     }
 
     // Log event
-    await analyticsService.logEvent({
+    await eventLogger.logEvent({
       patient_id,
       patient_email: patient_email || null,
       symptom: symptom.toLowerCase().trim(),
@@ -62,7 +62,7 @@ router.get('/analytics/dashboard', authMiddleware, async (req, res) => {
     const { limit = 30, symptom } = req.query;
 
     // Get analytics data
-    const dashboard = await analyticsService.getDashboard({
+    const dashboard = await eventLogger.getDashboard({
       limit: parseInt(limit),
       symptom: symptom ? symptom.toLowerCase().trim() : null
     });

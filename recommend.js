@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const symptomMapper = require('../services/symptomMapper');
-const mailerliteService = require('../services/mailerlite');
-const analyticsService = require('../services/analytics');
-const authMiddleware = require('../middleware/auth');
+const symptomMapper = require('./symptomMapper');
+const mailerliteService = require('./mailerlite');
+const eventLogger = require('./eventLogger');
+const authMiddleware = require('./auth');
 
 /**
  * POST /api/recommend
@@ -73,7 +73,7 @@ router.post('/recommend', authMiddleware, async (req, res) => {
     }
 
     // Log analytics event (async)
-    analyticsService.logEvent({
+    eventLogger.logEvent({
       patient_id,
       patient_email,
       symptom: normalizedSymptom,

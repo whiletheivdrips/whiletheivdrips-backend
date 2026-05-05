@@ -34,8 +34,8 @@ app.get('/', (req, res) => {
 });
 
 // Import routes
-const recommendRoutes = require('./routes/recommend');
-const analyticsRoutes = require('./routes/analytics');
+const recommendRoutes = require('./recommend');
+const analyticsRoutes = require('./analytics');
 
 // Use routes
 app.use('/api', recommendRoutes);
